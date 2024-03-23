@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +14,8 @@ class _HomePageState extends State<HomePage> {
   
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
+
+  var uuid = const Uuid();
 
   
   @override
@@ -28,6 +31,14 @@ class _HomePageState extends State<HomePage> {
                   return ListTile(
                     title: Text(notesList[index]['title'].toString()),
                     subtitle: Text(notesList[index]['desc'].toString()),
+                    trailing: IconButton(
+                        onPressed: (){
+                          notesList.removeAt(index);
+                          setState(() {
+                            
+                          });
+                        }, icon: const Icon(Icons.delete,color: Colors.red)
+                    ),
                   );
                 }),
           ),
@@ -70,6 +81,7 @@ class _HomePageState extends State<HomePage> {
                             ElevatedButton(onPressed: (){
                               if (titleController.text.isNotEmpty && descController.text.isNotEmpty){
                                 notesList.add({
+                                  'id': uuid.v4(),
                                   'title': titleController.text,
                                   'desc': descController.text
                                 });
