@@ -14,8 +14,10 @@ class _HomePageState extends State<HomePage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
 
+  
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Column(
         children: [
@@ -33,18 +35,71 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          titleController.clear();
+          descController.clear();
           
-          if (titleController.text.isNotEmpty && descController.text.isNotEmpty){
-            notesList.add({
-              'title': titleController.text,
-              'desc': descController.text
-            });
-            
-          }
-          
-          
+          showModalBottomSheet(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(51),bottom: Radius.circular(51)),
+            ),
+              context: context,
+              builder: (_){
+                return Container(
+                  height: 600,
+                  decoration: const BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(51),bottom: Radius.circular(51))
+                  ),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Add Notes'),
+                        TextField(
+                          controller: titleController,
+                            decoration: const InputDecoration()),
+                        const SizedBox(height: 20),
+                        TextField(
+                            controller: descController,
+                            decoration: const InputDecoration()),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(onPressed: (){
+                              if (titleController.text.isNotEmpty && descController.text.isNotEmpty){
+                                notesList.add({
+                                  'title': titleController.text,
+                                  'desc': descController.text
+                                });
+                              }
+
+                              setState(() {
+
+                              });
+                              Navigator.pop(context);
+                            }, child: const Text('Add')),
+
+                            ElevatedButton(onPressed: (){
+
+                              setState(() {
+
+                              });
+                              Navigator.pop(context);
+                            }, child: const Text('Cancel')),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }
+          );
+         
         },
         child: const Icon(Icons.add),
+        
       ),
     );
   }
