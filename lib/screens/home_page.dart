@@ -26,6 +26,9 @@ class _HomePageState extends State<HomePage> {
             return ListTile(
               onTap: (){
                 /// Update
+                titleController.text = notesList[index]['title'];
+                descController.text = notesList[index]['desc'];
+                
                 showModalBottomSheet(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(51),bottom: Radius.circular(51)),
